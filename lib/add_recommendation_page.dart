@@ -65,6 +65,7 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
                 });
               },
             ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 widget.onAdd({
@@ -75,10 +76,7 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
                 });
                 Navigator.pop(context);
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF149C68),
-              ),
-              child: Text('Adicionar'),
+              child: Text('Adicionar Filme'),
             ),
           ],
         ),

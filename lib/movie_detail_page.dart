@@ -17,13 +17,12 @@ class MovieDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Text(
-                movie['titulo']!,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF149C68)),
-              ),
-            ),
             SizedBox(height: 20),
+            Text(
+              movie['titulo']!,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF149C68)),
+            ),
+            SizedBox(height: 10),
             Text('Categoria: ${movie['categoria']!}', style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
             Text('Descrição:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
