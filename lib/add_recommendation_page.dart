@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class AddRecommendationPage extends StatefulWidget {
   final Function(Map<String, String>) onAdd;
 
-  AddRecommendationPage({required this.onAdd});
+  const AddRecommendationPage({super.key, required this.onAdd});
 
   @override
   _AddRecommendationPageState createState() => _AddRecommendationPageState();
@@ -14,13 +16,28 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
   final TextEditingController descriptionController = TextEditingController();
   String selectedCategory = 'Ação';
   String rating = '3';
+  String? selectedImagePath;
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage() async {
+    // Seleciona a imagem da galeria
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        // Armazena o caminho completo da imagem para uso com Image.file
+        selectedImagePath = pickedFile.path;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Adicionar Recomendações'),
-        backgroundColor: Color(0xFF149C68),
+        title: const Text('Adicionar Recomendações'),
+        backgroundColor: const Color(0xFF149C68),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -28,11 +45,11 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
           children: [
             TextField(
               controller: titleController,
-              decoration: InputDecoration(labelText: 'Título do Filme'),
+              decoration: const InputDecoration(labelText: 'Título do Filme'),
             ),
             TextField(
               controller: descriptionController,
-              decoration: InputDecoration(labelText: 'Descrição do Filme'),
+              decoration: const InputDecoration(labelText: 'Descrição do Filme'),
               maxLines: 3,
             ),
             DropdownButton<String>(
@@ -65,7 +82,21 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
                 });
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _pickImage,
+              child: const Text('Selecionar Imagem'),
+            ),
+            if (selectedImagePath != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Image.file(
+                  File(selectedImagePath!), // Exibe a imagem selecionada
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 widget.onAdd({
@@ -73,10 +104,11 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
                   'descricao': descriptionController.text,
                   'categoria': selectedCategory,
                   'nota': rating,
+                  'imagem': selectedImagePath ?? '', // Certifica-se de que não seja nulo
                 });
                 Navigator.pop(context);
               },
-              child: Text('Adicionar Filme'),
+              child: const Text('Adicionar Filme'),
             ),
           ],
         ),
