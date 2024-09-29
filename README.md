@@ -1,4 +1,4 @@
-# n1_mob
+# Filmu - App de Recomendação de filmes
 
 N1 da materia de Dev. Mobile
 
