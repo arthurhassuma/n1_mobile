@@ -1,16 +1,33 @@
-# Filmu - App de Recomendação de filmes
+# HOME TODO - Projeto Aplicativo Flutter
 
-N1 da materia de Dev. Mobile
+Primeira avaliação do 4º Semetre de engenharia de software, na matéria de Desenvolvimento Mobile.
 
-## Getting Started
+## Proposta de desenvolvimento:
 
-This project is a starting point for a Flutter application.
+App de Recomendações de Filmes
 
-A few resources to get you started if this is your first Flutter project:
+Objetivo: Um app onde o usuário pode buscar por filmes, visualizá-los por categorias e adicionar suas recomendações.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Widgets: Text, ListView, Image, DropdownButton
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Stateful Widget: Para adicionar e remover filmes recomendados
+
+Stateless Widget: Para exibir os detalhes dos filmes
+
+Scaffold: Estrutura básica com AppBar e botões
+
+List: Para exibir as recomendações de filmes
+
+Map: Para armazenar detalhes dos filmes (ex: {'titulo': 'Inception', 'categoria': 'Sci-Fi'})
+
+Layout: Organização de categorias e exibição de filmes
+
+Estilização: Personalizar os cards de filmes
+
+Botões: Para buscar e adicionar recomendações
+
+Navegação: Entre categorias de filmes e detalhes de cada filme
+
+## Paleta de cores escolhida por sorteio:
+
+![span](https://placehold.co/100x200/383939/FFFFFF.png?text=%23383939) ![span](https://placehold.co/100x200/149c68/FFFFFF.png?text=%23149c68) ![span](https://placehold.co/100x200/38c958/FFFFFF.png?text=%2338c958) ![span](https://placehold.co/100x200/aee637/000000.png?text=%23aee637) ![span](https://placehold.co/100x200/fffedb/000000.png?text=%23fffedb)
