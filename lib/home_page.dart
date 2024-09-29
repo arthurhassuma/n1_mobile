@@ -20,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // Inicialmente, a lista está vazia, sem os filmes A e B
     recommendations = [];
     _filteredRecommendations = recommendations;
   }
@@ -63,7 +62,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recomendações de Filmes', style: TextStyle(color: Color(0xFFfffedb))),
+        title: const Text('FILMU - Recomendações de Filmes', style: TextStyle(fontFamily: 'Proelium', color: Color(0xFFfffedb))),
         backgroundColor: const Color(0xFF149c68),
         actions: [
           Container(
@@ -92,10 +91,10 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(16.0),
             child: TextField(
               controller: _searchController,
-              style: const TextStyle(color: Color(0xFFFFFFFF)), // Define a cor do texto de entrada
+              style: const TextStyle(fontFamily: 'Proelium', color: Color(0xFFFFFFFF)), // Define a cor do texto de entrada
               decoration: InputDecoration(
                 labelText: 'Buscar filmes',
-                labelStyle: const TextStyle(color: Color(0xFFFFFFFF)), // Cor do label (placeholder)
+                labelStyle: const TextStyle(fontFamily: 'Proelium', color: Color(0xFFFFFFFF)), // Cor do label
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.search, color: Color(0xFFFFFFFF)), // Cor do ícone de busca
                   onPressed: _searchMovies,
@@ -117,7 +116,10 @@ class _HomePageState extends State<HomePage> {
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(
+                    value,
+                    style: const TextStyle(fontFamily: 'Proelium', color: Color(0xFF149C68)), // Alterada para #149C68
+                  ), // Aplicando a fonte
                 );
               }).toList(),
               onChanged: (String? newValue) {
@@ -137,9 +139,9 @@ class _HomePageState extends State<HomePage> {
                   color: const Color(0xFF383939),
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
-                    title: Text(movie['titulo']!, style: const TextStyle(color: Color(0xFF149C68))),
-                    subtitle: Text(movie['categoria']!, style: const TextStyle(color: Colors.white70)),
-                    leading: _buildImage(movie['imagem']!),
+                    title: Text(movie['titulo']!, style: const TextStyle(fontFamily: 'Proelium', color: Color(0xFF149C68))),
+                    subtitle: Text(movie['categoria']!, style: const TextStyle(fontFamily: 'Proelium', color: Color(0xFF149C68))), // Alterada para #149C68
+                    leading: _buildImage(movie['imagem']),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete, color: Colors.black),
                       onPressed: () {
@@ -172,8 +174,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildImage(String imagePath) {
-    if (imagePath.startsWith('assets/')) {
+  Widget _buildImage(String? imagePath) {
+    if (imagePath == null || !File(imagePath).existsSync()) {
+      return const Icon(
+        Icons.movie,
+        size: 50,
+        color: Colors.black87,
+      );
+    } else if (imagePath.startsWith('assets/')) {
       return Image.asset(
         imagePath,
         width: 50,
@@ -187,11 +195,10 @@ class _HomePageState extends State<HomePage> {
         height: 50,
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) {
-          return Image.asset(
-            'assets/placeholder.jpg',
-            width: 50,
-            height: 50,
-            fit: BoxFit.cover,
+          return const Icon(
+            Icons.movie,
+            size: 50,
+            color: Colors.grey,
           );
         },
       );

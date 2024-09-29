@@ -15,48 +15,113 @@ class MovieDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(movie['titulo']!),
+        title: Text(
+          movie['titulo']!,
+          style: const TextStyle(
+            fontFamily: 'Proelium', // Mantém a mesma fonte
+            color: Color(0xFFfffedb), // Cor do texto
+          ),
+        ),
         backgroundColor: const Color(0xFF149C68),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center, // Centraliza horizontalmente
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Se a imagem existir, exibe, caso contrário, exibe um placeholder
             imageExists
                 ? Image.file(
-              File(imagePath!), // Usar File para carregar a imagem
+              File(imagePath),
               height: 200,
               fit: BoxFit.cover,
             )
-                : Image.asset(
-              'assets/placeholder.png', // Placeholder quando a imagem não existir
-              height: 200,
-              fit: BoxFit.cover,
-            ),
+                : const Icon(Icons.movie, size: 200),
             const SizedBox(height: 20),
+
+            // Categoria
             Center(
               child: Text(
-                'Descrição: ${movie['descricao']}',
-                style: const TextStyle(fontSize: 16),
-                textAlign: TextAlign.center, // Centraliza o texto
+                'Categoria:',
+                style: const TextStyle(
+                  fontSize: 24, // Aumenta o tamanho da fonte
+                  color: Color(0xFFfffedb),
+                  fontFamily: 'Proelium',
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Center(
+              child: Text(
+                '${movie['categoria']}',
+                style: const TextStyle(
+                  fontSize: 22, // Aumenta o tamanho da fonte
+                  color: Color(0xFF149C68), // Alterada para #149C68
+                  fontFamily: 'Proelium',
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: 20),
+
+            // Nota
             Center(
               child: Text(
-                'Categoria: ${movie['categoria']}',
-                style: const TextStyle(fontSize: 16),
-                textAlign: TextAlign.center, // Centraliza o texto
+                'Nota:',
+                style: const TextStyle(
+                  fontSize: 24, // Aumenta o tamanho da fonte
+                  color: Color(0xFFfffedb),
+                  fontFamily: 'Proelium',
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '${movie['nota']}',
+                    style: const TextStyle(
+                      fontSize: 22, // Aumenta o tamanho da fonte
+                      color: Color(0xFF149C68), // Alterada para #149C68
+                      fontFamily: 'Proelium',
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  const Icon(
+                    Icons.star,
+                    color: Color(0xFF149C68), // Alterada para #149C68
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20),
+
+            // Descrição
             Center(
               child: Text(
-                'Nota: ${movie['nota']}',
-                style: const TextStyle(fontSize: 16),
-                textAlign: TextAlign.center, // Centraliza o texto
+                'Descrição:',
+                style: const TextStyle(
+                  fontSize: 24,
+                  color: Color(0xFFfffedb),
+                  fontFamily: 'Proelium',
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Center(
+              child: Text(
+                '${movie['descricao']}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFFfffedb),
+                  fontFamily: 'Proelium',
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
           ],

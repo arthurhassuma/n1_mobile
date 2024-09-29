@@ -21,12 +21,9 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage() async {
-    // Seleciona a imagem da galeria
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
     if (pickedFile != null) {
       setState(() {
-        // Armazena o caminho completo da imagem para uso com Image.file
         selectedImagePath = pickedFile.path;
       });
     }
@@ -36,7 +33,7 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicionar Recomendações'),
+        title: const Text('Adicionar Recomendações', style: TextStyle(fontFamily: 'Proelium', color: Color(0xFFfffedb))),
         backgroundColor: const Color(0xFF149C68),
       ),
       body: Padding(
@@ -45,20 +42,45 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
           children: [
             TextField(
               controller: titleController,
-              decoration: const InputDecoration(labelText: 'Título do Filme'),
+              decoration: InputDecoration(
+                labelText: 'Título do Filme',
+                labelStyle: const TextStyle(color: Color(0xFFfffedb), fontFamily: 'Proelium'), // Cor do rótulo com a fonte
+                enabledBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFfffedb)), // Borda quando não está focado
+                ),
+                focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF38c958)), // Borda quando está focado
+                ),
+              ),
+              style: const TextStyle(fontFamily: 'Proelium', color: Color(0xFFfffedb)), // Cor do texto
             ),
             TextField(
               controller: descriptionController,
-              decoration: const InputDecoration(labelText: 'Descrição do Filme'),
+              decoration: InputDecoration(
+                labelText: 'Descrição do Filme',
+                labelStyle: const TextStyle(color: Color(0xFFfffedb), fontFamily: 'Proelium'), // Cor do rótulo com a fonte
+                enabledBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFfffedb)), // Borda quando não está focado
+                ),
+                focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF38c958)), // Borda quando está focado
+                ),
+              ),
               maxLines: 3,
+              style: const TextStyle(fontFamily: 'Proelium', color: Color(0xFFfffedb)), // Cor do texto
             ),
             DropdownButton<String>(
               value: selectedCategory,
+              dropdownColor: const Color(0xFFfffedb), // Cor de fundo do dropdown
+              style: const TextStyle(color: Color(0xFF149C68)), // Cor do texto selecionado
               items: <String>['Ação', 'Comédia', 'Drama', 'Sci-Fi', 'Terror']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(
+                    value,
+                    style: const TextStyle(fontFamily: 'Proelium', color: Color(0xFF149C68)), // Cor do texto das opções
+                  ),
                 );
               }).toList(),
               onChanged: (String? newValue) {
@@ -69,11 +91,23 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
             ),
             DropdownButton<String>(
               value: rating,
+              dropdownColor: const Color(0xFFfffedb), // Cor de fundo do dropdown
+              style: const TextStyle(color: Color(0xFF149C68)), // Cor do texto selecionado
               items: <String>['0', '1', '2', '3', '4', '5']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text('Nota: $value'),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Nota: $value ',
+                        style: const TextStyle(fontFamily: 'Proelium', color: Color(0xFF149C68)), // Cor do texto das opções
+                      ),
+                      // Ícones de estrela correspondendo ao número da nota
+                      for (int i = 0; i < int.parse(value); i++)
+                        const Icon(Icons.star, color: Color(0xFF149C68)), // Ícone de estrela
+                    ],
+                  ),
                 );
               }).toList(),
               onChanged: (String? newValue) {
@@ -85,13 +119,13 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _pickImage,
-              child: const Text('Selecionar Imagem'),
+              child: const Text('Selecionar Imagem', style: TextStyle(fontFamily: 'Proelium')), // Usando a fonte nova
             ),
             if (selectedImagePath != null)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Image.file(
-                  File(selectedImagePath!), // Exibe a imagem selecionada
+                  File(selectedImagePath!),
                   height: 100,
                   fit: BoxFit.cover,
                 ),
@@ -104,11 +138,11 @@ class _AddRecommendationPageState extends State<AddRecommendationPage> {
                   'descricao': descriptionController.text,
                   'categoria': selectedCategory,
                   'nota': rating,
-                  'imagem': selectedImagePath ?? '', // Certifica-se de que não seja nulo
+                  'imagem': selectedImagePath ?? '',
                 });
                 Navigator.pop(context);
               },
-              child: const Text('Adicionar Filme'),
+              child: const Text('Adicionar Filme', style: TextStyle(fontFamily: 'Proelium')), // Usando a fonte nova
             ),
           ],
         ),

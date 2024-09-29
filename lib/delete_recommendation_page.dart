@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 class DeleteRecommendationPage extends StatelessWidget {
@@ -9,59 +8,30 @@ class DeleteRecommendationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? imagePath = movie['imagem'];
-
-    // Validação para checar se o arquivo da imagem existe
-    bool imageExists = imagePath != null && File(imagePath).existsSync();
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Excluir Recomendação'),
+        title: const Text('Excluir Recomendações', style: TextStyle(fontFamily: 'Proelium')),
         backgroundColor: const Color(0xFF149C68),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Se a imagem existir, exibe, caso contrário, exibe um placeholder
-            imageExists
-                ? Image.file(
-              File(imagePath!), // Usar File para carregar a imagem
-              height: 200,
-              fit: BoxFit.cover,
-            )
-                : Image.asset(
-              'assets/placeholder.png', // Placeholder quando a imagem não existir
-              height: 200,
-              fit: BoxFit.cover,
-            ),
+            Text('Tem certeza que deseja excluir a recomendação de "${movie['titulo']}"?',
+                style: const TextStyle(fontFamily: 'Proelium', color: Color(0xFFFFFFFF))),
             const SizedBox(height: 20),
-            Text(
-              'Você tem certeza que deseja excluir "${movie['titulo']}"?',
-              style: const TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
+            ElevatedButton(
+              onPressed: () {
+                onDelete(movie);
+                Navigator.pop(context);
+              },
+              child: const Text('Excluir', style: TextStyle(fontFamily: 'Proelium')),
             ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    onDelete(movie); // Chama a função de exclusão
-                    Navigator.pop(context); // Volta para a página anterior
-                  },
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFFF0000)),
-                  child: const Text('Sim'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Apenas volta
-                  },
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF149C68)),
-                  child: const Text('Não'),
-                ),
-              ],
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancelar', style: TextStyle(fontFamily: 'Proelium')),
             ),
           ],
         ),
